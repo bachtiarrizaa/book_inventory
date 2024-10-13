@@ -9,7 +9,11 @@ class BookController extends Controller
 {
     public function index()
     {
-        return Book::with('author')->get();
+        $books = Book::with('author')->get();
+        return response()->json([
+            'message' => 'List of books retrieved successfully.',
+            'data' => $books,
+        ]);
     }
 
     public function store(Request $request)
@@ -24,24 +28,59 @@ class BookController extends Controller
             'author_id' => 'required|exists:authors,id',
         ]);
 
-        return Book::create($request->all());
+        $book = Book::create($request->all());
+        
+        return response()->json([
+            'message' => 'Book created successfully.',
+            'data' => $book,
+        ], 201); // Status 201 untuk created
     }
 
     public function show($id)
     {
-        return Book::with('author')->findOrFail($id);
+        $book = Book::with('author')->findOrFail($id);
+        return response()->json([
+            'message' => 'Book retrieved successfully.',
+            'data' => $book,
+        ]);
+    }
+
+    public function search(Request $request)
+    {
+        // Ambil parameter title dari URL
+        $query = $request->query('title'); // Menggunakan query() untuk mendapatkan parameter dari URL
+        
+        // Validasi input
+        if (!$query) {
+            return response()->json(['error' => 'Query parameter title is required.'], 400);
+        }
+
+        // Pencarian buku berdasarkan title
+        $books = Book::where('title', 'LIKE', '%' . $query . '%')->get();
+
+        // Respons JSON
+        return response()->json([
+            'message' => 'Books searched successfully.',
+            'data' => $books,
+        ]);
     }
 
     public function update(Request $request, $id)
     {
         $book = Book::findOrFail($id);
         $book->update($request->all());
-        return $book;
+
+        return response()->json([
+            'message' => 'Book updated successfully.',
+            'data' => $book,
+        ]);
     }
 
     public function destroy($id)
     {
         Book::destroy($id);
-        return response()->noContent();
+        return response()->json([
+            'message' => 'Book deleted successfully.',
+        ], 200); // Mengubah status menjadi 200 OK
     }
 }

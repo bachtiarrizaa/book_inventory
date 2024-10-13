@@ -9,7 +9,11 @@ class AuthorController extends Controller
 {
     public function index()
     {
-        return Author::all();
+        $authors = Author::all();
+        return response()->json([
+            'message' => 'List of authors retrieved successfully.',
+            'data' => $authors,
+        ]);
     }
 
     public function store(Request $request)
@@ -21,24 +25,53 @@ class AuthorController extends Controller
             'biography' => 'nullable|string',
         ]);
 
-        return Author::create($request->all());
+        $author = Author::create($request->all());
+
+        return response()->json([
+            'message' => 'Author created successfully.',
+            'data' => $author,
+        ], 201); // Status 201 untuk created
     }
 
     public function show($id)
     {
-        return Author::findOrFail($id);
+        $author = Author::findOrFail($id);
+        return response()->json([
+            'message' => 'Author retrieved successfully.',
+            'data' => $author,
+        ]);
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $authors = Author::where('name', 'LIKE', "%{$query}%")
+            ->orWhere('biography', 'LIKE', "%{$query}%")
+            ->get();
+
+        return response()->json([
+            'message' => 'Authors searched successfully.',
+            'data' => $authors,
+        ]);
     }
 
     public function update(Request $request, $id)
     {
         $author = Author::findOrFail($id);
         $author->update($request->all());
-        return $author;
+        
+        return response()->json([
+            'message' => 'Author updated successfully.',
+            'data' => $author,
+        ]);
     }
 
     public function destroy($id)
     {
         Author::destroy($id);
-        return response()->noContent();
+        return response()->json([
+            'message' => 'Author deleted successfully.',
+        ], 204); // Status 204 untuk no content
     }
 }
