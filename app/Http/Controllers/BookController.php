@@ -7,39 +7,41 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    // Mendapatkan daftar semua buku
     public function index()
     {
-        $books = Book::with('author')->get();
-        return response()->json($books);
+        return Book::with('author')->get();
     }
 
-    // Menyimpan buku baru
     public function store(Request $request)
     {
-        $book = Book::create($request->all());
-        return response()->json($book, 201);
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'cover' => 'nullable|string',
+            'publisher' => 'nullable|string',
+            'synopsis' => 'nullable|string',
+            'publish_year' => 'nullable|integer',
+            'genre' => 'nullable|string',
+            'author_id' => 'required|exists:authors,id',
+        ]);
+
+        return Book::create($request->all());
     }
 
-    // Mendapatkan detail buku berdasarkan ID
     public function show($id)
     {
-        $book = Book::with('author')->findOrFail($id);
-        return response()->json($book);
+        return Book::with('author')->findOrFail($id);
     }
 
-    // Memperbarui buku berdasarkan ID
     public function update(Request $request, $id)
     {
         $book = Book::findOrFail($id);
         $book->update($request->all());
-        return response()->json($book);
+        return $book;
     }
 
-    // Menghapus buku berdasarkan ID
     public function destroy($id)
     {
-        Book::findOrFail($id)->delete();
-        return response()->json(null, 204);
+        Book::destroy($id);
+        return response()->noContent();
     }
 }

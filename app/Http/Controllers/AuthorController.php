@@ -7,39 +7,38 @@ use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
-    // Mendapatkan daftar semua author
     public function index()
     {
-        $authors = Author::with('books')->get();
-        return response()->json($authors);
+        return Author::all();
     }
 
-    // Menyimpan author baru
     public function store(Request $request)
     {
-        $author = Author::create($request->all());
-        return response()->json($author, 201);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'photo' => 'nullable|string',
+            'birthdate' => 'nullable|date',
+            'biography' => 'nullable|string',
+        ]);
+
+        return Author::create($request->all());
     }
 
-    // Mendapatkan detail author berdasarkan ID
     public function show($id)
     {
-        $author = Author::with('books')->findOrFail($id);
-        return response()->json($author);
+        return Author::findOrFail($id);
     }
 
-    // Memperbarui author berdasarkan ID
     public function update(Request $request, $id)
     {
         $author = Author::findOrFail($id);
         $author->update($request->all());
-        return response()->json($author);
+        return $author;
     }
 
-    // Menghapus author berdasarkan ID
     public function destroy($id)
     {
-        Author::findOrFail($id)->delete();
-        return response()->json(null, 204);
+        Author::destroy($id);
+        return response()->noContent();
     }
 }
