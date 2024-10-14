@@ -53,7 +53,7 @@ Dokumentasi endpoint API tersedia di sini:
 -   **Laravel 8.x**: Framework PHP yang digunakan untuk membangun API
 -   **Laravel Sanctum**: Paket Laravel untuk otentikasi berbasis token
 -   **Composer**: Dependency manager untuk PHP
--   **MySQL/MariaDB**: Database yang digunakan untuk menyimpan data buku dan penulis
+-   **MySQL**: Database yang digunakan untuk menyimpan data buku dan penulis
 -   **Postman**: Alat untuk mengetes API
 
 ### Cara Install:
