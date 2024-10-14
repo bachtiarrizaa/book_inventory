@@ -17,26 +17,26 @@ Book Inventory API adalah aplikasi backend yang dibangun menggunakan Laravel 8. 
 
 ### Tabel `books`
 
-| Column       | Type    | Description                         |
-| ------------ | ------- | ----------------------------------- |
-| id           | integer | Primary key                         |
-| cover        | string  | URL atau path cover buku (nullable) |
-| title        | string  | Judul buku                          |
-| publisher    | string  | Penerbit buku (nullable)            |
-| synopsis     | text    | Sinopsis buku (nullable)            |
-| publish_year | integer | Tahun terbit buku (nullable)        |
-| genre        | string  | Genre buku (nullable)               |
-| author_id    | integer | Foreign key ke tabel authors        |
+| Column       | Type    | Description                  |
+| ------------ | ------- | ---------------------------- |
+| id           | integer | Primary key                  |
+| cover        | string  | Foto cover buku (nullable)   |
+| title        | string  | Judul buku                   |
+| publisher    | string  | Penerbit buku (nullable)     |
+| synopsis     | text    | Sinopsis buku (nullable)     |
+| publish_year | integer | Tahun terbit buku (nullable) |
+| genre        | string  | Genre buku (nullable)        |
+| author_id    | integer | Foreign key ke tabel authors |
 
 ### Tabel `authors`
 
-| Column    | Type    | Description                           |
-| --------- | ------- | ------------------------------------- |
-| id        | integer | Primary key                           |
-| photo     | string  | URL atau path foto penulis (nullable) |
-| name      | string  | Nama penulis                          |
-| birthdate | date    | Tanggal lahir penulis (nullable)      |
-| biography | text    | Biografi penulis (nullable)           |
+| Column    | Type    | Description                      |
+| --------- | ------- | -------------------------------- |
+| id        | integer | Primary key                      |
+| photo     | string  | Foto Penulis (nullable)          |
+| name      | string  | Nama penulis                     |
+| birthdate | date    | Tanggal lahir penulis (nullable) |
+| biography | text    | Biografi penulis (nullable)      |
 
 ### Relasi:
 
