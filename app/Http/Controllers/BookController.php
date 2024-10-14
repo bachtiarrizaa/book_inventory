@@ -17,7 +17,7 @@ class BookController extends Controller
                 'data' => $books,
             ], 200);
         } catch (\Exception $e) {
-            report($e); // Log the exception details to laravel.log
+            report($e);
             return response()->json([
                 'message' => 'Something went wrong while retrieving books. Please try again later.',
             ], 500);
@@ -44,7 +44,7 @@ class BookController extends Controller
                 'data' => $book,
             ], 201);
         } catch (\Exception $e) {
-            report($e); // Log the exception details to laravel.log
+            report($e);
             return response()->json([
                 'message' => 'Something went wrong while creating the book. Please try again later.',
             ], 500);
@@ -60,12 +60,12 @@ class BookController extends Controller
                 'data' => $book,
             ], 200);
         } catch (ModelNotFoundException $e) {
-            report($e); // Log the exception details to laravel.log
+            report($e);
             return response()->json([
                 'message' => 'Book not found. Please check the ID and try again.',
             ], 404);
         } catch (\Exception $e) {
-            report($e); // Log the exception details to laravel.log
+            report($e);
             return response()->json([
                 'message' => 'Something went wrong while retrieving the book. Please try again later.',
             ], 500);
@@ -90,7 +90,7 @@ class BookController extends Controller
                 'data' => $books,
             ], 200);
         } catch (\Exception $e) {
-            report($e); // Log the exception details to laravel.log
+            report($e);
             return response()->json([
                 'message' => 'Something went wrong while searching for books. Please try again later.',
             ], 500);
@@ -108,12 +108,12 @@ class BookController extends Controller
                 'data' => $book,
             ], 200);
         } catch (ModelNotFoundException $e) {
-            report($e); // Log the exception details to laravel.log
+            report($e);
             return response()->json([
                 'message' => 'Book not found. Please check the ID and try again.',
             ], 404);
         } catch (\Exception $e) {
-            report($e); // Log the exception details to laravel.log
+            report($e);
             return response()->json([
                 'message' => 'Something went wrong while updating the book. Please try again later.',
             ], 500);
@@ -128,12 +128,12 @@ class BookController extends Controller
                 'message' => 'Book deleted successfully.',
             ], 200);
         } catch (ModelNotFoundException $e) {
-            report($e); // Log the exception details to laravel.log
+            report($e);
             return response()->json([
                 'message' => 'Book not found. Please check the ID and try again.',
             ], 404);
         } catch (\Exception $e) {
-            report($e); // Log the exception details to laravel.log
+            report($e);
             return response()->json([
                 'message' => 'Something went wrong while deleting the book. Please try again later.',
             ], 500);

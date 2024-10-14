@@ -30,14 +30,13 @@ class AuthController extends Controller
 
             return response()->json(['message' => 'Invalid credentials. Please check your email and password.', 'status_code' => 401], 401);
         } catch (\Exception $e) {
-            report($e); // Log the exception details to laravel.log
+            report($e);
             return response()->json([
                 'message' => 'An error occurred during login. Please try again later.',
             ], 500);
         }
     }
 
-    // Logout
     public function logout(Request $request)
     {
         try {
@@ -47,7 +46,7 @@ class AuthController extends Controller
                 'message' => 'Successfully logged out.',
             ], 200);
         } catch (\Exception $e) {
-            report($e); // Log the exception details to laravel.log
+            report($e);
             return response()->json([
                 'message' => 'An error occurred during logout. Please try again later.',
             ], 500);

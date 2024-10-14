@@ -17,7 +17,7 @@ class AuthorController extends Controller
                 'data' => $authors,
             ], 200);
         } catch (\Exception $e) {
-            report($e); // Log the exception details to laravel.log
+            report($e);
             return response()->json([
                 'message' => 'Something went wrong while retrieving authors. Please try again later.',
             ], 500);
@@ -41,7 +41,7 @@ class AuthorController extends Controller
                 'data' => $author,
             ], 201);
         } catch (\Exception $e) {
-            report($e); // Log the exception details to laravel.log
+            report($e);
             return response()->json([
                 'message' => 'Something went wrong while creating the author. Please try again later.',
             ], 500);
@@ -57,12 +57,12 @@ class AuthorController extends Controller
                 'data' => $author,
             ], 200);
         } catch (ModelNotFoundException $e) {
-            report($e); // Log the exception details to laravel.log
+            report($e);
             return response()->json([
                 'message' => 'Author not found. Please check the ID and try again.',
             ], 404);
         } catch (\Exception $e) {
-            report($e); // Log the exception details to laravel.log
+            report($e);
             return response()->json([
                 'message' => 'Something went wrong while retrieving the author. Please try again later.',
             ], 500);
@@ -83,7 +83,7 @@ class AuthorController extends Controller
                 'data' => $authors,
             ], 200);
         } catch (\Exception $e) {
-            report($e); // Log the exception details to laravel.log
+            report($e);
             return response()->json([
                 'message' => 'Something went wrong while searching authors. Please try again later.',
             ], 500);
@@ -101,12 +101,12 @@ class AuthorController extends Controller
                 'data' => $author,
             ], 200);
         } catch (ModelNotFoundException $e) {
-            report($e); // Log the exception details to laravel.log
+            report($e);
             return response()->json([
                 'message' => 'Author not found. Please check the ID and try again.',
             ], 404);
         } catch (\Exception $e) {
-            report($e); // Log the exception details to laravel.log
+            report($e);
             return response()->json([
                 'message' => 'Something went wrong while updating the author. Please try again later.',
             ], 500);
@@ -121,12 +121,12 @@ class AuthorController extends Controller
                 'message' => 'Author deleted successfully.',
             ], 200);
         } catch (ModelNotFoundException $e) {
-            report($e); // Log the exception details to laravel.log
+            report($e);
             return response()->json([
                 'message' => 'Author not found. Please check the ID and try again.',
             ], 404);
         } catch (\Exception $e) {
-            report($e); // Log the exception details to laravel.log
+            report($e);
             return response()->json([
                 'message' => 'Something went wrong while deleting the author. Please try again later.',
             ], 500);

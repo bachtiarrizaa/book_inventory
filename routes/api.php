@@ -18,26 +18,6 @@ use App\Http\Controllers\AdminAuthController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-// Route::prefix('authors')->group(function () {
-//     Route::get('/', [AuthorController::class, 'index']);
-//     Route::post('/', [AuthorController::class, 'store']);
-//     Route::get('/{id}', [AuthorController::class, 'show']);
-//     Route::put('/{id}', [AuthorController::class, 'update']);
-//     Route::delete('/{id}', [AuthorController::class, 'destroy']);
-// });
-
-// Route::prefix('books')->group(function () {
-//     Route::get('/', [BookController::class, 'index']);
-//     Route::post('/', [BookController::class, 'store']);
-//     Route::get('/{id}', [BookController::class, 'show']);
-//     Route::put('/{id}', [BookController::class, 'update']);
-//     Route::delete('/{id}', [BookController::class, 'destroy']);
-// });
-
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
