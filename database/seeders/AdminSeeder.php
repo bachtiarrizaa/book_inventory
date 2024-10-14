@@ -18,8 +18,8 @@ class AdminSeeder extends Seeder
         User::create([
             'name' => 'Admin',
             'email' => 'admin@example.com',
-            'password' => Hash::make('password'), // Ganti dengan password yang aman
-            'is_admin' => true, // Menandai user sebagai admin
+            'password' => Hash::make('password'),
+            'is_admin' => true,
         ]);
     }
 }
