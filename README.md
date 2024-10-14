@@ -2,7 +2,7 @@
 
 ## A. Penjelasan Project
 
-Book Inventory API adalah sebuah aplikasi backend yang dibangun menggunakan Laravel 8. Aplikasi ini berfungsi untuk mengelola data buku dan penulis (authors) dengan relasi One-to-Many, di mana satu penulis dapat memiliki banyak buku. API ini juga mendukung operasi CRUD (Create, Read, Update, Delete) untuk data buku dan penulis, serta fitur pencarian berdasarkan judul buku. Sistem autentikasi untuk admin menggunakan Laravel Sanctum untuk memastikan hanya admin yang dapat melakukan manajemen data melalui API.
+Book Inventory API adalah aplikasi backend yang dibangun menggunakan Laravel 8. Aplikasi ini berfungsi untuk mengelola data buku dan penulis (authors) dengan relasi One-to-Many, di mana satu penulis dapat memiliki banyak buku. API ini mendukung operasi CRUD (Create, Read, Update, Delete) untuk data buku dan penulis, serta fitur pencarian berdasarkan judul buku. Sistem autentikasi untuk admin menggunakan Laravel Sanctum untuk memastikan hanya admin yang dapat melakukan manajemen data melalui API.
 
 ### Fitur Utama:
 
@@ -42,19 +42,49 @@ Book Inventory API adalah sebuah aplikasi backend yang dibangun menggunakan Lara
 
 -   Satu `author` dapat memiliki banyak `books` (One-to-Many).
 
-## C. Screenshot Aplikasi
+## C. Dokumentasi API
 
-### 1. Postman - CRUD Buku
+Dokumentasi endpoint API tersedia di sini:
+[Dokumentasi Postman](https://documenter.getpostman.com/view/34641104/2sAXxTaVK8)
 
-![CRUD Buku](screenshots/postman_books_crud.png)
+Contoh request dan response:
 
-### 2. Postman - CRUD Penulis
+1. **Mendapatkan Daftar Buku**
 
-![CRUD Penulis](screenshots/postman_authors_crud.png)
+    - **Request:** `GET /api/books`
+    - **Response:**
+        ```json
+        {
+            "message": "List of books retrieved successfully.",
+            "data": [
+                {
+                    "id": 1,
+                    "title": "Contoh Buku",
+                    "author": {
+                        "name": "Nama Penulis"
+                    }
+                }
+            ]
+        }
+        ```
 
-### 3. Postman - Pencarian Buku
-
-![Pencarian Buku](screenshots/postman_books_search.png)
+2. **Mencari Buku Berdasarkan Judul**
+    - **Request:** `GET /api/books?title=Contoh`
+    - **Response:**
+        ```json
+        {
+            "message": "Books searched successfully.",
+            "data": [
+                {
+                    "id": 1,
+                    "title": "Contoh Buku",
+                    "author": {
+                        "name": "Nama Penulis"
+                    }
+                }
+            ]
+        }
+        ```
 
 ## D. Dependency
 
@@ -70,34 +100,47 @@ Book Inventory API adalah sebuah aplikasi backend yang dibangun menggunakan Lara
 1. Clone repository:
 
     ```bash
-    git clone https://github.com/username/repository-name.git
+    git clone https://github.com/bachtiarrizaa/book_inventory.git
     ```
 
-2. Install dependencies menggunakan Composer:
+2. Masuk ke direktori proyek:
+
+    ```bash
+    cd book_inventory
+    ```
+
+3. Install dependencies menggunakan Composer:
 
     ```bash
     composer install
     ```
 
-3. Copy `.env.example` menjadi `.env` dan konfigurasi database:
+4. Copy `.env.example` menjadi `.env` dan konfigurasi database:
 
     ```bash
     cp .env.example .env
     ```
 
-4. Generate application key:
+5. Generate application key:
 
     ```bash
     php artisan key:generate
     ```
 
-5. Jalankan migrasi database:
+6. Jalankan migrasi database:
 
     ```bash
     php artisan migrate
     ```
 
-6. Jalankan server lokal:
+7. Jalankan seeder (opsional, untuk mengisi data awal):
+
+    ```bash
+    php artisan db:seed
+    ```
+
+8. Jalankan server lokal:
+
     ```bash
     php artisan serve
     ```
