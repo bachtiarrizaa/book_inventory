@@ -47,45 +47,6 @@ Book Inventory API adalah aplikasi backend yang dibangun menggunakan Laravel 8. 
 Dokumentasi endpoint API tersedia di sini:
 [Dokumentasi Postman](https://documenter.getpostman.com/view/34641104/2sAXxTaVK8)
 
-Contoh request dan response:
-
-1. **Mendapatkan Daftar Buku**
-
-    - **Request:** `GET /api/books`
-    - **Response:**
-        ```json
-        {
-            "message": "List of books retrieved successfully.",
-            "data": [
-                {
-                    "id": 1,
-                    "title": "Contoh Buku",
-                    "author": {
-                        "name": "Nama Penulis"
-                    }
-                }
-            ]
-        }
-        ```
-
-2. **Mencari Buku Berdasarkan Judul**
-    - **Request:** `GET /api/books?title=Contoh`
-    - **Response:**
-        ```json
-        {
-            "message": "Books searched successfully.",
-            "data": [
-                {
-                    "id": 1,
-                    "title": "Contoh Buku",
-                    "author": {
-                        "name": "Nama Penulis"
-                    }
-                }
-            ]
-        }
-        ```
-
 ## D. Dependency
 
 -   **PHP 8.x**: Bahasa pemrograman utama untuk Laravel
