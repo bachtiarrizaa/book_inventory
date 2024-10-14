@@ -10,28 +10,47 @@ class AuthController extends Controller
     // Login
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        try {
+            $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            
-            if (!$user->is_admin) {
-                return response()->json(['message' => 'Unauthorized'], 401);
+            if (Auth::attempt($credentials)) {
+                $user = Auth::user();
+
+                if (!$user->is_admin) {
+                    return response()->json(['message' => 'Unauthorized. Only administrators can log in.'], 401);
+                }
+
+                $token = $user->createToken('auth_token')->plainTextToken;
+
+                return response()->json([
+                    'message' => 'Login successful.',
+                    'access_token' => $token
+                ], 200);
             }
 
-            $token = $user->createToken('auth_token')->plainTextToken;
-
-            return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
+            return response()->json(['message' => 'Invalid credentials. Please check your email and password.', 'status_code' => 401], 401);
+        } catch (\Exception $e) {
+            report($e); // Log the exception details to laravel.log
+            return response()->json([
+                'message' => 'An error occurred during login. Please try again later.',
+            ], 500);
         }
-
-        return response()->json(['message' => 'Invalid credentials'], 401);
     }
 
     // Logout
     public function logout(Request $request)
     {
-        $request->user()->tokens()->delete();
+        try {
+            $request->user()->tokens()->delete();
 
-        return response()->json(['message' => 'Successfully logged out']);
+            return response()->json([
+                'message' => 'Successfully logged out.',
+            ], 200);
+        } catch (\Exception $e) {
+            report($e); // Log the exception details to laravel.log
+            return response()->json([
+                'message' => 'An error occurred during logout. Please try again later.',
+            ], 500);
+        }
     }
 }
