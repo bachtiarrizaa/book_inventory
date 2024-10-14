@@ -8,14 +8,52 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AuthorController extends Controller
 {
-    public function index()
+    // public function index()
+    // {
+    //     try {
+    //         $authors = Author::all();
+    //         return response()->json([
+    //             'message' => 'List of authors retrieved successfully.',
+    //             'data' => $authors,
+    //         ], 200);
+    //     } catch (\Exception $e) {
+    //         report($e);
+    //         return response()->json([
+    //             'message' => 'Something went wrong while retrieving authors. Please try again later.',
+    //         ], 500);
+    //     }
+    // }
+
+    public function index(Request $request)
     {
         try {
+            // Ambil parameter name dari query string
+            $query = $request->query('name');
+
+            // Jika ada parameter name, lakukan pencarian
+            if ($query) {
+                $authors = Author::where('name', 'LIKE', '%' . $query . '%')->get();
+
+                // Cek jika tidak ada penulis yang ditemukan
+                if ($authors->isEmpty()) {
+                    return response()->json([
+                        'message' => 'No authors found with the given name.'
+                    ], 404);
+                }
+
+                return response()->json([
+                    'message' => 'Authors matching the search criteria retrieved successfully.',
+                    'data' => $authors,
+                ], 200);
+            }
+
+            // Jika tidak ada parameter name, kembalikan semua penulis
             $authors = Author::all();
             return response()->json([
                 'message' => 'List of authors retrieved successfully.',
                 'data' => $authors,
             ], 200);
+
         } catch (\Exception $e) {
             report($e);
             return response()->json([
@@ -65,27 +103,6 @@ class AuthorController extends Controller
             report($e);
             return response()->json([
                 'message' => 'Something went wrong while retrieving the author. Please try again later.',
-            ], 500);
-        }
-    }
-
-    public function search(Request $request)
-    {
-        try {
-            $query = $request->input('query');
-
-            $authors = Author::where('name', 'LIKE', "%{$query}%")
-                ->orWhere('biography', 'LIKE', "%{$query}%")
-                ->get();
-
-            return response()->json([
-                'message' => 'Authors searched successfully.',
-                'data' => $authors,
-            ], 200);
-        } catch (\Exception $e) {
-            report($e);
-            return response()->json([
-                'message' => 'Something went wrong while searching authors. Please try again later.',
             ], 500);
         }
     }

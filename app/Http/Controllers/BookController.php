@@ -8,14 +8,34 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class BookController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         try {
+            $query = $request->query('title');
+
+            if ($query) {
+                $books = Book::with('author')
+                    ->where('title', 'LIKE', '%' . $query . '%')
+                    ->get();
+
+                if ($books->isEmpty()) {
+                    return response()->json([
+                        'message' => 'No books found with the given title.'
+                    ], 404);
+                }
+
+                return response()->json([
+                    'message' => 'Books matching the search criteria retrieved successfully.',
+                    'data' => $books,
+                ], 200);
+            }
+
             $books = Book::with('author')->get();
             return response()->json([
                 'message' => 'List of books retrieved successfully.',
                 'data' => $books,
             ], 200);
+
         } catch (\Exception $e) {
             report($e);
             return response()->json([
@@ -23,6 +43,7 @@ class BookController extends Controller
             ], 500);
         }
     }
+
 
     public function store(Request $request)
     {
@@ -47,52 +68,6 @@ class BookController extends Controller
             report($e);
             return response()->json([
                 'message' => 'Something went wrong while creating the book. Please try again later.',
-            ], 500);
-        }
-    }
-
-    public function show($id)
-    {
-        try {
-            $book = Book::with('author')->findOrFail($id);
-            return response()->json([
-                'message' => 'Book retrieved successfully.',
-                'data' => $book,
-            ], 200);
-        } catch (ModelNotFoundException $e) {
-            report($e);
-            return response()->json([
-                'message' => 'Book not found. Please check the ID and try again.',
-            ], 404);
-        } catch (\Exception $e) {
-            report($e);
-            return response()->json([
-                'message' => 'Something went wrong while retrieving the book. Please try again later.',
-            ], 500);
-        }
-    }
-
-    public function search(Request $request)
-    {
-        try {
-            $query = $request->query('title');
-
-            if (!$query) {
-                return response()->json([
-                    'error' => 'Query parameter title is required.',
-                ], 400);
-            }
-
-            $books = Book::where('title', 'LIKE', '%' . $query . '%')->get();
-
-            return response()->json([
-                'message' => 'Books searched successfully.',
-                'data' => $books,
-            ], 200);
-        } catch (\Exception $e) {
-            report($e);
-            return response()->json([
-                'message' => 'Something went wrong while searching for books. Please try again later.',
             ], 500);
         }
     }
